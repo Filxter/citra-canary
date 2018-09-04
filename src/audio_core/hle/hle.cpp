@@ -182,6 +182,10 @@ void DspHle::Impl::PipeWrite(DspPipe pipe_number, const std::vector<u8>& buffer)
 
         return;
     }
+
+    case DspPipe::Binary:
+        std::copy(buffer.begin(), buffer.end(), std::back_inserter(pipe_data[static_cast<size_t>(DspPipe::Binary)]));
+        return;
     default:
         LOG_CRITICAL(Audio_DSP, "pipe_number = {} unimplemented",
                      static_cast<std::size_t>(pipe_number));
