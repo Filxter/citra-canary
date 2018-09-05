@@ -60,7 +60,7 @@ private:
 
     // Loads framebuffer from emulated memory into the display information structure
     void LoadFBToScreenInfo(const GPU::Regs::FramebufferConfig& framebuffer,
-                            ScreenInfo& screen_info, bool right_eye);
+                             ScreenInfo& screen_info);
     // Fills active OpenGL texture with the given RGB color.
     void LoadColorToActiveGLTexture(u8 color_r, u8 color_g, u8 color_b, const TextureInfo& texture);
 
@@ -73,7 +73,7 @@ private:
     OGLFramebuffer screenshot_framebuffer;
 
     /// Display information for top and bottom screens respectively
-    std::array<ScreenInfo, 3> screen_infos;
+    std::array<ScreenInfo, 2> screen_infos;
 
     // Shader uniform location indices
     GLuint uniform_modelview_matrix;

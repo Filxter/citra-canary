@@ -155,9 +155,6 @@ struct Values {
     float bg_green;
     float bg_blue;
 
-    bool toggle_3d;
-    u8 factor_3d;
-
     // Audio
     bool enable_dsp_lle;
     bool enable_dsp_lle_multithread;
