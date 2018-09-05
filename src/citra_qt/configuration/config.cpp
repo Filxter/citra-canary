@@ -118,8 +118,6 @@ void Config::ReadValues() {
     qt_config->endGroup();
 
     qt_config->beginGroup("Layout");
-    Settings::values.toggle_3d = ReadSetting("toggle_3d", false).toBool();
-    Settings::values.factor_3d = ReadSetting("factor_3d", 0).toInt();
     Settings::values.layout_option =
         static_cast<Settings::LayoutOption>(ReadSetting("layout_option").toInt());
     Settings::values.swap_screen = ReadSetting("swap_screen", false).toBool();
@@ -385,8 +383,6 @@ void Config::SaveValues() {
     qt_config->endGroup();
 
     qt_config->beginGroup("Layout");
-    WriteSetting("toggle_3d", Settings::values.toggle_3d, false);
-    WriteSetting("factor_3d", Settings::values.factor_3d, 0);
     WriteSetting("layout_option", static_cast<int>(Settings::values.layout_option));
     WriteSetting("swap_screen", Settings::values.swap_screen, false);
     WriteSetting("custom_layout", Settings::values.custom_layout, false);
@@ -398,6 +394,17 @@ void Config::SaveValues() {
     WriteSetting("custom_bottom_top", Settings::values.custom_bottom_top, 240);
     WriteSetting("custom_bottom_right", Settings::values.custom_bottom_right, 360);
     WriteSetting("custom_bottom_bottom", Settings::values.custom_bottom_bottom, 480);
+    qt_config->setValue("layout_option", static_cast<int>(Settings::values.layout_option));
+    qt_config->setValue("swap_screen", Settings::values.swap_screen);
+    qt_config->setValue("custom_layout", Settings::values.custom_layout);
+    qt_config->setValue("custom_top_left", Settings::values.custom_top_left);
+    qt_config->setValue("custom_top_top", Settings::values.custom_top_top);
+    qt_config->setValue("custom_top_right", Settings::values.custom_top_right);
+    qt_config->setValue("custom_top_bottom", Settings::values.custom_top_bottom);
+    qt_config->setValue("custom_bottom_left", Settings::values.custom_bottom_left);
+    qt_config->setValue("custom_bottom_top", Settings::values.custom_bottom_top);
+    qt_config->setValue("custom_bottom_right", Settings::values.custom_bottom_right);
+    qt_config->setValue("custom_bottom_bottom", Settings::values.custom_bottom_bottom);
     qt_config->endGroup();
 
     qt_config->beginGroup("Audio");
