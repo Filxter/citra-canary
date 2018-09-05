@@ -56,11 +56,11 @@ Handler::Handler() {
     using namespace std::placeholders;
     update_time_event = Core::System::GetInstance().CoreTiming().RegisterEvent(
         "SharedPage::UpdateTimeCallback", std::bind(&Handler::UpdateTimeCallback, this, _1, _2));
+
     Core::System::GetInstance().CoreTiming().ScheduleEvent(0, update_time_event);
 
-    float slidestate =
-        Settings::values.toggle_3d ? (float_le)Settings::values.factor_3d / 100 : 0.0f;
-    shared_page.sliderstate_3d = slidestate;
+    shared_page.sliderstate_3d = 0.01f;
+    shared_page.ledstate_3d = 0;
 }
 
 /// Gets system time in 3DS format. The epoch is Jan 1900, and the unit is millisecond.
