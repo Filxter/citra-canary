@@ -62,6 +62,7 @@ void ConfigureGraphics::setConfiguration() {
     ui->toggle_shader_jit->setChecked(Settings::values.use_shader_jit);
     ui->resolution_factor_combobox->setCurrentIndex(Settings::values.resolution_factor);
     ui->toggle_vsync->setChecked(Settings::values.use_vsync);
+    ui->toggle_format_reinterpret_hack->setChecked(Settings::values.use_format_reinterpret_hack);
     ui->toggle_frame_limit->setChecked(Settings::values.use_frame_limit);
     ui->frame_limit->setValue(Settings::values.frame_limit);
     ui->factor_3d->setValue(Settings::values.factor_3d);
@@ -83,6 +84,7 @@ void ConfigureGraphics::applyConfiguration() {
     Settings::values.resolution_factor =
         static_cast<u16>(ui->resolution_factor_combobox->currentIndex());
     Settings::values.use_vsync = ui->toggle_vsync->isChecked();
+    Settings::values.use_format_reinterpret_hack = ui->toggle_format_reinterpret_hack->isChecked();
     Settings::values.use_frame_limit = ui->toggle_frame_limit->isChecked();
     Settings::values.frame_limit = ui->frame_limit->value();
     Settings::values.factor_3d = ui->factor_3d->value();
