@@ -1568,6 +1568,25 @@ void RasterizerCacheOpenGL::ValidateSurface(const Surface& surface, PAddr addr, 
             }
         }
 
+        // By this point, we've checked to see if there was a valid surface that we could have
+        // copied from, so now we want to check if the surface was created on the gpu only. If it
+        // was, and since we already checked if there was a matching surface with the same format,
+        // this means its requesting a different texture format and we will skip it. If any part
+        // that we will validate is from the CPU, then we flush it all.
+
+        // As this is a HACK, remove this when we get proper hw texture en/decoding support
+        if (VideoCore::g_use_format_reinterpret_hack) {
+            bool retry{};
+
+            for (const auto& pair : RangeFromInterval(dirty_regions, interval)) {
+                surface->invalid_regions.erase(pair.first & interval);
+                retry = true;
+            }
+
+            if (retry)
+                continue;
+        }
+
         // Load data from 3DS memory
         FlushRegion(params.addr, params.size);
         surface->LoadGLBuffer(params.addr, params.end);
