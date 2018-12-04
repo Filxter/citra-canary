@@ -143,6 +143,8 @@ void Config::ReadValues() {
         ReadSetting("use_format_reinterpret_hack", true).toBool();
     Settings::values.FMV_hack = ReadSetting("FMV_hack", false).toBool();
     Settings::values.AddTicks = ReadSetting("AddTicks", 16000).toInt();
+    Settings::values.custom_refresh_rate = ReadSetting("custom_refresh_rate", false).toBool();
+    Settings::values.screen_refresh_rate = ReadSetting("screen_refresh_rate", 60).toInt();
 
     Settings::values.bg_red = ReadSetting("bg_red", 0.0).toFloat();
     Settings::values.bg_green = ReadSetting("bg_green", 0.0).toFloat();
@@ -431,8 +433,10 @@ void Config::SaveValues() {
     WriteSetting("use_frame_limit", Settings::values.use_frame_limit, true);
     WriteSetting("frame_limit", Settings::values.frame_limit, 100);
     WriteSetting("use_format_reinterpret_hack", Settings::values.use_format_reinterpret_hack, true);
-    WriteSetting("FMV_hack", Settings::values.FMV_hack);
-    WriteSetting("AddTicks", Settings::values.AddTicks);
+    WriteSetting("FMV_hack", Settings::values.FMV_hack, false);
+    WriteSetting("AddTicks", Settings::values.AddTicks, 16000);
+    WriteSetting("custom_refresh_rate", Settings::values.custom_refresh_rate, false);
+    WriteSetting("screen_refresh_rate", Settings::values.screen_refresh_rate);
 
     // Cast to double because Qt's written float values are not human-readable
     WriteSetting("bg_red", (double)Settings::values.bg_red, 0.0);
