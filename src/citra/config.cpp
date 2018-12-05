@@ -123,10 +123,8 @@ void Config::ReadValues() {
     Settings::values.use_frame_limit = sdl2_config->GetBoolean("Renderer", "use_frame_limit", true);
     Settings::values.frame_limit =
         static_cast<u16>(sdl2_config->GetInteger("Renderer", "frame_limit", 100));
-
-    Settings::values.toggle_3d = sdl2_config->GetBoolean("Renderer", "toggle_3d", false);
-    Settings::values.factor_3d =
-        static_cast<u8>(sdl2_config->GetInteger("Renderer", "factor_3d", 0));
+    Settings::values.use_format_reinterpret_hack =
+        static_cast<u16>(sdl2_config->GetBoolean("Renderer", "use_format_reinterpret_hack", true));
 
     Settings::values.bg_red = (float)sdl2_config->GetReal("Renderer", "bg_red", 0.0);
     Settings::values.bg_green = (float)sdl2_config->GetReal("Renderer", "bg_green", 0.0);

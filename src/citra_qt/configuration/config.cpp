@@ -114,6 +114,12 @@ void Config::ReadValues() {
     Settings::values.use_vsync = ReadSetting("use_vsync", false).toBool();
     Settings::values.use_frame_limit = ReadSetting("use_frame_limit", true).toBool();
     Settings::values.frame_limit = ReadSetting("frame_limit", 100).toInt();
+    Settings::values.use_format_reinterpret_hack =
+        ReadSetting("use_format_reinterpret_hack", true).toBool();
+    Settings::values.FMV_hack = ReadSetting("FMV_hack", false).toBool();
+    Settings::values.AddTicks = ReadSetting("AddTicks", 16000).toInt();
+    Settings::values.custom_refresh_rate = ReadSetting("custom_refresh_rate", false).toBool();
+    Settings::values.screen_refresh_rate = ReadSetting("screen_refresh_rate", 60).toInt();
 
     Settings::values.bg_red = ReadSetting("bg_red", 0.0).toFloat();
     Settings::values.bg_green = ReadSetting("bg_green", 0.0).toFloat();
@@ -121,8 +127,6 @@ void Config::ReadValues() {
     qt_config->endGroup();
 
     qt_config->beginGroup("Layout");
-    Settings::values.toggle_3d = ReadSetting("toggle_3d", false).toBool();
-    Settings::values.factor_3d = ReadSetting("factor_3d", 0).toInt();
     Settings::values.layout_option =
         static_cast<Settings::LayoutOption>(ReadSetting("layout_option").toInt());
     Settings::values.swap_screen = ReadSetting("swap_screen", false).toBool();
@@ -413,6 +417,11 @@ void Config::SaveValues() {
     WriteSetting("use_vsync", Settings::values.use_vsync, false);
     WriteSetting("use_frame_limit", Settings::values.use_frame_limit, true);
     WriteSetting("frame_limit", Settings::values.frame_limit, 100);
+    WriteSetting("use_format_reinterpret_hack", Settings::values.use_format_reinterpret_hack, true);
+    WriteSetting("FMV_hack", Settings::values.FMV_hack, false);
+    WriteSetting("AddTicks", Settings::values.AddTicks, 16000);
+    WriteSetting("custom_refresh_rate", Settings::values.custom_refresh_rate, false);
+    WriteSetting("screen_refresh_rate", Settings::values.screen_refresh_rate);
 
     // Cast to double because Qt's written float values are not human-readable
     WriteSetting("bg_red", (double)Settings::values.bg_red, 0.0);
@@ -421,8 +430,6 @@ void Config::SaveValues() {
     qt_config->endGroup();
 
     qt_config->beginGroup("Layout");
-    WriteSetting("toggle_3d", Settings::values.toggle_3d, false);
-    WriteSetting("factor_3d", Settings::values.factor_3d, 0);
     WriteSetting("layout_option", static_cast<int>(Settings::values.layout_option));
     WriteSetting("swap_screen", Settings::values.swap_screen, false);
     WriteSetting("custom_layout", Settings::values.custom_layout, false);
@@ -434,6 +441,17 @@ void Config::SaveValues() {
     WriteSetting("custom_bottom_top", Settings::values.custom_bottom_top, 240);
     WriteSetting("custom_bottom_right", Settings::values.custom_bottom_right, 360);
     WriteSetting("custom_bottom_bottom", Settings::values.custom_bottom_bottom, 480);
+    qt_config->setValue("layout_option", static_cast<int>(Settings::values.layout_option));
+    qt_config->setValue("swap_screen", Settings::values.swap_screen);
+    qt_config->setValue("custom_layout", Settings::values.custom_layout);
+    qt_config->setValue("custom_top_left", Settings::values.custom_top_left);
+    qt_config->setValue("custom_top_top", Settings::values.custom_top_top);
+    qt_config->setValue("custom_top_right", Settings::values.custom_top_right);
+    qt_config->setValue("custom_top_bottom", Settings::values.custom_top_bottom);
+    qt_config->setValue("custom_bottom_left", Settings::values.custom_bottom_left);
+    qt_config->setValue("custom_bottom_top", Settings::values.custom_bottom_top);
+    qt_config->setValue("custom_bottom_right", Settings::values.custom_bottom_right);
+    qt_config->setValue("custom_bottom_bottom", Settings::values.custom_bottom_bottom);
     qt_config->endGroup();
 
     qt_config->beginGroup("Audio");

@@ -127,19 +127,17 @@ use_frame_limit =
 # 1 - 9999: Speed limit as a percentage of target game speed. 100 (default)
 frame_limit =
 
+# Advanced option: Ignores flushing surfaces from cpu memory if the surface was created by the gpu
+# and has a different format. This can speed up many games, potentially break some, but is rightfully
+# just a hack as a placeholder for gpu texture encoding/decoding
+# 0: Off, 1: On (default)
+use_format_reinterpret_hack =
+
 # The clear color for the renderer. What shows up on the sides of the bottom screen.
 # Must be in range of 0.0-1.0. Defaults to 0.0 for all.
 bg_red =
 bg_blue =
 bg_green =
-
-# Toggles Stereoscopic 3D
-# 0 (default): Off, 1: On
-toggle_3d =
-
-# Change 3D Intensity
-# 0 - 100: Intensity. 0 (default)
-factor_3d =
 
 [Layout]
 # Layout for the screen inside the render window.

@@ -60,17 +60,9 @@ EmuWindow::~EmuWindow() {
  */
 static bool IsWithinTouchscreen(const Layout::FramebufferLayout& layout, unsigned framebuffer_x,
                                 unsigned framebuffer_y) {
-    if (Settings::values.toggle_3d) {
-        return (framebuffer_y >= layout.bottom_screen.top &&
-                framebuffer_y < layout.bottom_screen.bottom &&
-                framebuffer_x >= layout.bottom_screen.left / 2 &&
-                framebuffer_x < layout.bottom_screen.right / 2);
-    } else {
-        return (framebuffer_y >= layout.bottom_screen.top &&
-                framebuffer_y < layout.bottom_screen.bottom &&
-                framebuffer_x >= layout.bottom_screen.left &&
-                framebuffer_x < layout.bottom_screen.right);
-    }
+    return (
+        framebuffer_y >= layout.bottom_screen.top && framebuffer_y < layout.bottom_screen.bottom &&
+        framebuffer_x >= layout.bottom_screen.left && framebuffer_x < layout.bottom_screen.right);
 }
 
 std::tuple<unsigned, unsigned> EmuWindow::ClipToTouchScreen(unsigned new_x, unsigned new_y) {
@@ -88,16 +80,9 @@ void EmuWindow::TouchPressed(unsigned framebuffer_x, unsigned framebuffer_y) {
         return;
 
     std::lock_guard<std::mutex> guard(touch_state->mutex);
-    if (Settings::values.toggle_3d) {
-        touch_state->touch_x =
-            static_cast<float>(framebuffer_x - framebuffer_layout.bottom_screen.left / 2) /
-            (framebuffer_layout.bottom_screen.right / 2 -
-             framebuffer_layout.bottom_screen.left / 2);
-    } else {
-        touch_state->touch_x =
-            static_cast<float>(framebuffer_x - framebuffer_layout.bottom_screen.left) /
-            (framebuffer_layout.bottom_screen.right - framebuffer_layout.bottom_screen.left);
-    }
+    touch_state->touch_x =
+        static_cast<float>(framebuffer_x - framebuffer_layout.bottom_screen.left) /
+        (framebuffer_layout.bottom_screen.right - framebuffer_layout.bottom_screen.left);
     touch_state->touch_y =
         static_cast<float>(framebuffer_y - framebuffer_layout.bottom_screen.top) /
         (framebuffer_layout.bottom_screen.bottom - framebuffer_layout.bottom_screen.top);
@@ -130,6 +115,9 @@ void EmuWindow::UpdateCurrentFramebufferLayout(unsigned width, unsigned height) 
         switch (Settings::values.layout_option) {
         case Settings::LayoutOption::SingleScreen:
             layout = Layout::SingleFrameLayout(width, height, Settings::values.swap_screen);
+            break;
+        case Settings::LayoutOption::MediumScreen:
+            layout = Layout::MediumFrameLayout(width, height, Settings::values.swap_screen);
             break;
         case Settings::LayoutOption::LargeScreen:
             layout = Layout::LargeFrameLayout(width, height, Settings::values.swap_screen);

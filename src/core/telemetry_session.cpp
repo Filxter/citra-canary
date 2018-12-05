@@ -178,8 +178,6 @@ TelemetrySession::TelemetrySession() {
     AddField(Telemetry::FieldType::UserConfig, "Renderer_UseShaderJit",
              Settings::values.use_shader_jit);
     AddField(Telemetry::FieldType::UserConfig, "Renderer_UseVsync", Settings::values.use_vsync);
-    AddField(Telemetry::FieldType::UserConfig, "Renderer_Toggle3d", Settings::values.toggle_3d);
-    AddField(Telemetry::FieldType::UserConfig, "Renderer_Factor3d", Settings::values.factor_3d);
     AddField(Telemetry::FieldType::UserConfig, "System_IsNew3ds", Settings::values.is_new_3ds);
     AddField(Telemetry::FieldType::UserConfig, "System_RegionValue", Settings::values.region_value);
 }
